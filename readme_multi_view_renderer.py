@@ -45,7 +45,7 @@ IMPORTANT: Everything after the first `--` is passed to the script's argparse.
 
 MANDATORY / COMMON ARGS
 -----------------------
---object_source      builtin:suzanne|builtin:cube|builtin:sphere|builtin:apple OR path to .stl/.obj/.fbx/.glb
+--object_source      builtin:suzanne|builtin:cube|builtin:sphere|builtin:apple|builtin:cone|builtin:cylinder|builtin:torus|builtin:plane|builtin:capsule|builtin:table|builtin:room OR path to .stl/.obj/.fbx/.glb
 --object_name        Logical name used in output folder naming & metadata
 --views              Number of camera samples (>=1)
 

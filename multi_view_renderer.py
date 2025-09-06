@@ -132,6 +132,55 @@ def import_object(object_source, object_name):
             bpy.context.view_layer.objects.active = body
             bpy.ops.object.join()
             imported_objs.append(bpy.context.active_object)
+        elif kind == 'cone':
+            bpy.ops.mesh.primitive_cone_add(vertices=64)
+        elif kind == 'cylinder':
+            bpy.ops.mesh.primitive_cylinder_add(vertices=64)
+        elif kind == 'torus':
+            bpy.ops.mesh.primitive_torus_add(major_segments=64, minor_segments=32)
+        elif kind == 'plane':
+            bpy.ops.mesh.primitive_plane_add(size=2)
+        elif kind == 'capsule':  # cylinder with hemispherical ends
+            bpy.ops.mesh.primitive_cylinder_add(vertices=48, depth=1.0)
+            cyl = bpy.context.active_object
+            # Add sphere, scale in Z then separate halves
+            bpy.ops.mesh.primitive_uv_sphere_add(segments=48, ring_count=24, location=(0,0,0.5))
+            top = bpy.context.active_object
+            top.scale = (0.5,0.5,0.5)
+            bpy.ops.mesh.primitive_uv_sphere_add(segments=48, ring_count=24, location=(0,0,-0.5))
+            bot = bpy.context.active_object
+            bot.scale = (0.5,0.5,0.5)
+            bpy.ops.object.select_all(action='DESELECT')
+            for o in (cyl, top, bot):
+                o.select_set(True)
+            bpy.context.view_layer.objects.active = cyl
+            bpy.ops.object.join()
+            imported_objs.append(bpy.context.active_object)
+        elif kind == 'table':  # simple table: top + 4 legs
+            bpy.ops.mesh.primitive_cube_add(size=2)
+            top = bpy.context.active_object
+            top.scale = (1.0,1.0,0.1)
+            legs = []
+            leg_offsets = [(0.9,0.9,-1.0),(0.9,-0.9,-1.0),(-0.9,0.9,-1.0),(-0.9,-0.9,-1.0)]
+            for (lx,ly,lz) in leg_offsets:
+                bpy.ops.mesh.primitive_cube_add(size=0.3, location=(lx,ly,lz))
+                leg = bpy.context.active_object
+                leg.scale = (0.3,0.3,1.5)
+                legs.append(leg)
+            bpy.ops.object.select_all(action='DESELECT')
+            top.select_set(True)
+            for leg in legs:
+                leg.select_set(True)
+            bpy.context.view_layer.objects.active = top
+            bpy.ops.object.join()
+            imported_objs.append(bpy.context.active_object)
+        elif kind == 'room':  # inverted cube (normals inside) to act as a simple room
+            bpy.ops.mesh.primitive_cube_add(size=6)
+            room = bpy.context.active_object
+            # Flip normals by scaling -1 on one axis & applying
+            room.scale.x = -room.scale.x
+            bpy.ops.object.transform_apply(location=False, rotation=False, scale=True)
+            imported_objs.append(room)
         else:
             raise ValueError(f'Unknown builtin primitive {kind}')
         obj = bpy.context.active_object
