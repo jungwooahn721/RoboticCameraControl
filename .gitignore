@@ -1,0 +1,5 @@
+# Generated multi-view datasets (do not commit)
+results/
+
+# (Optional) Uncomment to ignore any render output folders if placed elsewhere
+# *_render_output_*/
