@@ -1,0 +1,3 @@
+/home/minhopark/repos/repos4students/jungwooahn/RoboticCameraControl/blender-4.5.2-linux-x64/blender --background --python add_cube.py
+
+/path/to/blender --background --python /path/to/import_so101.py
