@@ -1,5 +1,10 @@
 # Generated multi-view datasets (do not commit)
 results/
 
+# Ignore local Blender distribution & archives
+blender-*-linux-x64/
+blender-*.tar.xz
+blender-*.zip
+
 # (Optional) Uncomment to ignore any render output folders if placed elsewhere
 # *_render_output_*/
