@@ -8,3 +8,5 @@ blender-*.zip
 
 # (Optional) Uncomment to ignore any render output folders if placed elsewhere
 # *_render_output_*/
+#Blender distribution
+tools/blender-4.5.2-linux-x64/
